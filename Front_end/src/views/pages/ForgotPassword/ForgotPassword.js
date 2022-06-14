@@ -72,7 +72,7 @@ export default function ForgotPassword() {
                 
                 <div className="form-group d-flex justify-content-end gap-3">
                   <button type="submit" className="btn btn-primary">
-                    Send
+                    Send reset link
                   </button>
                   <Link to="/login">
                       <button  className="btn btn-primary" >

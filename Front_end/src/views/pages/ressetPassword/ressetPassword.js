@@ -57,7 +57,7 @@ export default function ressetPassword() {
               <Form>
                 
                 <div className="form-group mb-3">
-                  <label htmlFor="password">New Password:</label>
+                  <label htmlFor="password">New password:</label>
                   <Field
                     type="password"
                     id="password"

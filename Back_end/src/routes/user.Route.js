@@ -9,16 +9,16 @@ router.get('/users', passport.authenticate('bearer', { session: false }), userCo
 
 
 // get one user by id
-router.get('/users/:id',passport.authenticate('bearer', { session: false }), userController.getOneUser);
+router.get('/users/:id', passport.authenticate('bearer', { session: false }), userController.getOneUser);
 
 //add a new user to the db
-router.post("/users",passport.authenticate('bearer', { session: false }), userController.addOneUser);
+router.post("/users", passport.authenticate('bearer', { session: false }), userController.addOneUser);
 
 // update a list of todo from the db
-router.put('/users/:id',passport.authenticate('bearer', { session: false }), userController.updateOneUser);
+router.put('/users/:id', passport.authenticate('bearer', { session: false }), userController.updateOneUser);
 
 //delete a users to the db
-router.delete('/users/:id',passport.authenticate('bearer', { session: false }), userController.deleteOneUser);
+router.delete('/users/:id', passport.authenticate('bearer', { session: false }), userController.deleteOneUser);
 
 
 

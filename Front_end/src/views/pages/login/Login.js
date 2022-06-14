@@ -52,6 +52,8 @@ const Login = () => {
                   id="email"
                   name="email"
                   className="form-control"
+                  placeholder="Enter your email address here"
+
                 />
                 <ErrorMessage
                   name="email"
@@ -66,6 +68,7 @@ const Login = () => {
                   id="password"
                   name="password"
                   className="form-control"
+                  placeholder="Enter your password here"
                 />
                 <ErrorMessage
                   name="password"
@@ -75,21 +78,16 @@ const Login = () => {
               </div>
              
               
-              <div className="form-group d-flex justify-content-end gap-3">
+              <div className="d-grid gap-2">
                 <button type="submit" className="btn btn-primary">
-                  Sign In
+                  Sign in
                 </button>
-              
-                  <Link to="/register">
-                    <button  className="btn btn-primary" >
-                      Register 
-                    </button>
+                  <Link to="/register" className="btn btn-success"> 
+                      Create your account  
                   </Link>
               </div>
               <Link to="/forgotpassword">
-                    
-                    Forgot PassWord 
-                  
+                    Forgot your password ?
                 </Link>
             </Form>
           )}

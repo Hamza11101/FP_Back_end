@@ -10,42 +10,41 @@ const Register = () => {
   var Navigate = useNavigate();
   const validationSchema = Yup.object().shape({
     firstName: Yup.string()
-      .min(5, "Too short")
-      .max(50, "Too long!")
-      .required("First Name is required"),
+      .min(5, "Too short.")
+      .max(50, "Too long.")
+      .required("First name is required."),
     lastName: Yup.string()
-      .min(2, "Too short")
-      .max(10, "Too long!")
-      .required("Last Name is required "),
+      .min(2, "Too short.")
+      .max(10, "Too long.")
+      .required("Last name is required."),
     email: Yup.string()
-      .email("invalide email")
-      .required("Email is required"),
+      .email("Invalid email.")
+      .required("Email is required."),
     password: Yup.string()
-      .required("Password is required")
-      .min(8, "Too short")
-      .max(50, "Too long"),
+      .required("Password is required.")
+      .min(8, "Too short.")
+      .max(50, "Too long."),
     confirmPassword: Yup.string()
-      .required("Confirmation is required")
+      .required("Confirmation password is required.")
       .oneOf(
         [Yup.ref("password"), null],
-        "not the same"
+        "not the same passwords."
       ),
-    
+
   });
-  
+
   const initialValues = {
     firstName: "",
     lastName: "",
     email: "",
     password: "",
     confirmPassword: "",
-    
   };
-  
+
   const handleSubmit = (values) => {
-    auth.register(values).then(response=>{
+    auth.register(values).then(response => {
       Navigate("/login");
-    }).catch(error=>{
+    }).catch(error => {
       console.log(error);
     })
 
@@ -69,6 +68,7 @@ const Register = () => {
                     id="firstName"
                     name="firstName"
                     className="form-control"
+                    placeholder="Enter your first name here"
                   />
                   <ErrorMessage
                     name="firstName"
@@ -83,6 +83,7 @@ const Register = () => {
                     id="lastName"
                     name="lastName"
                     className="form-control"
+                    placeholder="Enter your last name here"
                   />
                   <ErrorMessage
                     name="lastName"
@@ -97,6 +98,7 @@ const Register = () => {
                     id="email"
                     name="email"
                     className="form-control"
+                    placeholder="Enter your email address here"
                   />
                   <ErrorMessage
                     name="email"
@@ -111,6 +113,7 @@ const Register = () => {
                     id="password"
                     name="password"
                     className="form-control"
+                    placeholder="Enter your password here"
                   />
                   <ErrorMessage
                     name="password"
@@ -127,6 +130,7 @@ const Register = () => {
                     id="confirmPassword"
                     name="confirmPassword"
                     className="form-control"
+                    placeholder="Enter your password here"
                   />
                   <ErrorMessage
                     name="confirmPassword"
@@ -134,16 +138,16 @@ const Register = () => {
                     className="text-danger"
                   />
                 </div>
-                
-                <div className="form-group d-flex justify-content-end gap-3">
+
+                <div className="d-grid gap-2">
                   <button type="submit" className="btn btn-primary">
-                    create your account
+                    Create your account
                   </button>
-                  <Link to="/login">
-                      <button  className="btn btn-primary" >
-                        Sign In 
-                      </button>
-                    </Link>
+                </div>
+                <div className="d-grid gap-2">
+                  <Link to="/login" className="mt-2 btn btn-success">
+                    Sign in
+                  </Link>
                 </div>
               </Form>
             )}
