@@ -2,11 +2,11 @@ import React from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "bootstrap/dist/css/bootstrap.css";
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 
 import { useNavigate } from 'react-router-dom';
-import auth from '../../../Services/auth';
-const Register = () => {
+import userService from "src/Services/user";
+const AddUser = () => {
   var Navigate = useNavigate();
   const validationSchema = Yup.object().shape({
     firstName: Yup.string()
@@ -50,21 +50,21 @@ const Register = () => {
       password:values.password
     };
 
-    auth.register(data).then(response=>{
+    userService.createOne(data).then(response=>{
       console.log(response)
       
 
     }).catch(error=>{
       console.log(error);
     })
-       Navigate("/login");
+       Navigate("/base/tables");
 
   };
   return (
     <div className="container">
       <div className="row">
         <div className="col-md-6 offset-md-3 pt-3">
-          <h1 className="text-center">Register</h1>
+          <h1 className="text-center">Add one User</h1>
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
@@ -147,13 +147,9 @@ const Register = () => {
                 
                 <div className="form-group d-flex justify-content-end gap-3">
                   <button type="submit" className="btn btn-primary">
-                    create your account
+                    Add User
                   </button>
-                  <Link to="/login">
-                      <button  className="btn btn-primary" >
-                        Sign In 
-                      </button>
-                    </Link>
+                 
                 </div>
               </Form>
             )}
@@ -164,4 +160,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default AddUser;

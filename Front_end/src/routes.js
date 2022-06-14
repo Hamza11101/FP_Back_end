@@ -17,7 +17,7 @@ const Placeholders = React.lazy(() => import('./views/base/placeholders/Placehol
 const Popovers = React.lazy(() => import('./views/base/popovers/Popovers'))
 const Progress = React.lazy(() => import('./views/base/progress/Progress'))
 const Spinners = React.lazy(() => import('./views/base/spinners/Spinners'))
-const Tables = React.lazy(() => import('./views/base/tables/Tables'))
+const Tables = React.lazy(() => import('./views/base/tables/UserTable'))
 const Tooltips = React.lazy(() => import('./views/base/tooltips/Tooltips'))
 
 // Buttons

@@ -12,11 +12,12 @@ const UserSchema = new Schema({
     password:{type:String,
         required:[true,'Password Name field is required']},
     role:{type:String,
-        required:[true,'Role field is required']},
+    },
+    
+           
 },{
     timestamps: true,
     versionKey: false
 });
 
-const User = mongoose.model('user',UserSchema);
-module.exports = User;
+module.exports = mongoose.model('user',UserSchema);

@@ -1,20 +1,26 @@
-const User = require('../models/User.model')
+const User = require('../Models/User.model');
 const bcrypt = require("bcryptjs");
 
 
 
-exports.Register = async (req, res, next) => {
+exports.register = async (req, res, next) => {
+
     try {
+
+        const userFound = await User.find({email: req.body.email});
+        if(userFound.length>0){
+            res.status(400).send({message: 'email already in use.'})
+        }
         const user = new User({
-            FirstName: req.body.FirstName,
-            LastName: req.body.LastName,
-            Password: req.body.Password,
-            Email: req.body.Email,
-            Role:req.body.Role,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            password: req.body.password,
+            email: req.body.email,
+            role:req.body.role,
         })
         const salt = await bcrypt.genSalt(10);
         // now we set user password to hashed password
-        user.Password = await bcrypt.hash(user.Password, salt);
+        user.password = await bcrypt.hash(user.password, salt);
         // console.log(register.passeword);
         user.save();
         // const user = await user.create(req.body)
@@ -28,23 +34,3 @@ exports.Register = async (req, res, next) => {
     }
 };
 
-
-exports.getAllUsers = async (req, res, next) => {
-    try {
-        console.log(req.user);
-        let user = await User.find()
-        res.send(user);
-    } catch (error) {
-        next();
-    }
-}
-
-exports.getOneUser = async (req, res, next) => {
-    try {
-        let user = await User.findById(req.params.id)
-        res.send(user);
-
-    } catch (error) {
-        next();
-    }
-}

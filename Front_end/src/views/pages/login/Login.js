@@ -1,85 +1,114 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import {
-  CButton,
-  CCard,
-  CCardBody,
-  CCardGroup,
-  CCol,
-  CContainer,
-  CForm,
-  CFormInput,
-  CInputGroup,
-  CInputGroupText,
-  CRow,
-} from '@coreui/react'
-import CIcon from '@coreui/icons-react'
-import { cilLockLocked, cilUser } from '@coreui/icons'
+import { Formik, Field, Form, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import "bootstrap/dist/css/bootstrap.css";
+// import { History } from 'history';
+import auth from '../../../Services/auth';
 
+// const history = History
 const Login = () => {
+  const validationSchema = Yup.object().shape({
+    
+    email: Yup.string()
+      .email("invalide email")
+      .required("Email is required"),
+    password: Yup.string()
+      .required("Password is required")
+      .min(8, "Too short")
+      .max(50, "Too long"),
+  
+  });
+  
+  const initialValues = {
+  
+    email: "",
+    password: "",
+  
+    
+  };
+  
+  const  handleSubmit = (values) => {
+    const data = {
+      email:values.email,
+      password:values.password
+    };
+
+    auth.login(data).then(response=>{
+      console.log(response)
+      localStorage.setItem('token', response.data.token)
+
+    }).catch(error=>{
+      console.log(error);
+    })
+   
+  
+};
   return (
-    <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
-      <CContainer>
-        <CRow className="justify-content-center">
-          <CCol md={8}>
-            <CCardGroup>
-              <CCard className="p-4">
-                <CCardBody>
-                  <CForm>
-                    <h1>Login</h1>
-                    <p className="text-medium-emphasis">Sign In to your account</p>
-                    <CInputGroup className="mb-3">
-                      <CInputGroupText>
-                        <CIcon icon={cilUser} />
-                      </CInputGroupText>
-                      <CFormInput placeholder="Username" autoComplete="username" />
-                    </CInputGroup>
-                    <CInputGroup className="mb-4">
-                      <CInputGroupText>
-                        <CIcon icon={cilLockLocked} />
-                      </CInputGroupText>
-                      <CFormInput
-                        type="password"
-                        placeholder="Password"
-                        autoComplete="current-password"
-                      />
-                    </CInputGroup>
-                    <CRow>
-                      <CCol xs={6}>
-                        <CButton color="primary" className="px-4">
-                          Login
-                        </CButton>
-                      </CCol>
-                      <CCol xs={6} className="text-right">
-                        <CButton color="link" className="px-0">
-                          Forgot password?
-                        </CButton>
-                      </CCol>
-                    </CRow>
-                  </CForm>
-                </CCardBody>
-              </CCard>
-              <CCard className="text-white bg-primary py-5" style={{ width: '44%' }}>
-                <CCardBody className="text-center">
-                  <div>
-                    <h2>Sign up</h2>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                      tempor incididunt ut labore et dolore magna aliqua.
-                    </p>
-                    <Link to="/register">
-                      <CButton color="primary" className="mt-3" active tabIndex={-1}>
-                        Register Now!
-                      </CButton>
-                    </Link>
-                  </div>
-                </CCardBody>
-              </CCard>
-            </CCardGroup>
-          </CCol>
-        </CRow>
-      </CContainer>
+    <div className="container">
+    <div className="row">
+      <div className="col-md-6 offset-md-3 pt-3">
+        <h1 className="text-center">Sign In</h1>
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={(values) => handleSubmit(values)}
+        >
+          {({ resetForm }) =>   (
+            <Form>
+             
+              <div className="form-group mb-3">
+                <label htmlFor="email">Email:</label>
+                <Field
+                  type="email"
+                  id="email"
+                  name="email"
+                  className="form-control"
+                />
+                <ErrorMessage
+                  name="email"
+                  component="small"
+                  className="text-danger"
+                />
+              </div>
+              <div className="form-group mb-3">
+                <label htmlFor="password">Password:</label>
+                <Field
+                  type="password"
+                  id="password"
+                  name="password"
+                  className="form-control"
+                />
+                <ErrorMessage
+                  name="password"
+                  component="small"
+                  className="text-danger"
+                />
+              </div>
+             
+              
+              <div className="form-group d-flex justify-content-end gap-3">
+                <button type="submit" className="btn btn-primary">
+                  Sign In
+                </button>
+              
+                  <Link to="/register">
+                    <button  className="btn btn-primary" >
+                      Register 
+                    </button>
+                  </Link>
+              </div>
+              <Link to="/forgotpassword">
+                    
+                    Forgot PassWord 
+                  
+                </Link>
+            </Form>
+          )}
+        </Formik>
+      </div>
     </div>
+  </div>
   )
 }
 
