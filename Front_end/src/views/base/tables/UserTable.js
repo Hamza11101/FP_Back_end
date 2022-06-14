@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import userService from '../../../Services/user'
 import { Link } from "react-router-dom";
 import { toast } from 'react-toastify';
+import confirm from '../../../Services/confirm'
 
 
 const Tables = () => {
@@ -29,14 +30,18 @@ const Tables = () => {
   };
 
   const removeOneUser = (e,id) => {
-    userService.removeOne(id)
-      .then(response => {
-        toast.success(response.data.message);
-        refreshList();
-      })
-      .catch(e => {
-        console.log(e);
-      });
+    confirm().then((result)=>{
+      if (result.isConfirmed) {
+        userService.removeOne(id)
+          .then(response => {
+            toast.success(response.data.message);
+            refreshList();
+          })
+          .catch(e => {
+            console.log(e);
+          });
+      }
+    })
   };
 
   return (
