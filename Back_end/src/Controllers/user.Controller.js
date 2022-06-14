@@ -24,17 +24,23 @@ exports.getOneUser = async (req, res, next) => {
 exports.addOneUser = async (req, res, next) => {
 
     try {
-        const salt = await bcrypt.genSalt(10);
-        req.body.password = await bcrypt.hash(user.password, salt);
-        const user = new User({
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            email: req.body.email,
-            password: req.body.password,
-            role: req.body.role,
-        })
-        await user.save()
-        res.send(user)
+       
+        const userFound = await User.find({ email: req.body.email });
+        if (userFound.length > 0) {
+            res.status(400).send({ message: 'E-mail already in use.' })
+        }
+        else {
+            const user = new User({
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
+                email: req.body.email,
+                role: req.body.role,
+            })
+            const salt = await bcrypt.genSalt(10);
+            user.password = await bcrypt.hash(req.body.password, salt);
+            await user.save()
+            res.send({message: "User created successfully."})
+        }
 
     } catch (error) {
         console.log(error);
@@ -45,10 +51,21 @@ exports.addOneUser = async (req, res, next) => {
 
 exports.updateOneUser = async (req, res, next) => {
     try {
-        const salt = await bcrypt.genSalt(10);
-        req.body.password = await bcrypt.hash(user.password, salt);
-        let user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true })
-        res.send(user)
+        
+        const userFound = await User.find({ email: req.body.email });
+        if (userFound.length > 0) {
+            res.status(400).send({ message: 'E-mail already in use.' })
+        }
+        else {
+            if( req.body.password != ""){
+                const salt = await bcrypt.genSalt(10);
+                req.body.password = await bcrypt.hash(user.password, salt);
+            }else{
+                delete  req.body.password;
+            }
+            let user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true })
+            res.send(user)
+        }
     }
     catch (error) {
         console.log(error);
@@ -59,7 +76,7 @@ exports.updateOneUser = async (req, res, next) => {
 exports.deleteOneUser = async (req, res, next) => {
     try {
         let user = await User.findByIdAndRemove(req.params.id);
-        res.send(user);
+        res.send({message: 'User has been deleted successfully.'});
     } catch (error) {
         console.log(error);
         next();

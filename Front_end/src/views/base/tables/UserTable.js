@@ -2,9 +2,7 @@ import React, { useState, useEffect } from 'react'
 import "bootstrap/dist/css/bootstrap.css";
 import userService from '../../../Services/user'
 import { Link } from "react-router-dom";
-
-
-
+import { toast } from 'react-toastify';
 
 
 const Tables = () => {
@@ -44,7 +42,7 @@ const Tables = () => {
   const removeOneUser = (e,id) => {
     userService.removeOne(id)
       .then(response => {
-        // console.log(response.data);
+        toast.success(response.data.message);
         refreshList();
       })
       .catch(e => {
@@ -65,6 +63,11 @@ const Tables = () => {
       <div className="col-md-6">
         <h4>Users List</h4>
         <div>
+        <div className="d-grid gap-2">
+            <Link to="/adduser">
+              <button className="btn btn-success" type="button">Add User</button>
+            </Link>
+          </div>
           <table className="table">
             <thead className="thead-dark">
               <tr>
@@ -106,11 +109,7 @@ const Tables = () => {
 
 
           </table>
-          <div className="d-grid gap-2">
-            <Link to="/adduser">
-              <button className="btn btn-success" type="button">Add User</button>
-            </Link>
-          </div>
+          
 
 
         </div>

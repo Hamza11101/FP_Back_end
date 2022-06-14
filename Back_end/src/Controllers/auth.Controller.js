@@ -22,10 +22,10 @@ exports.logIn = async (req, res, next) => {
                 );
                 res.status(200).json({ message: "Login sucessfully.", token: token });
             } else {
-                res.status(400).json({ error: "E-mail or password is invalid." });
+                res.status(400).json({ message: "E-mail or password is invalid." });
             }
         } else {
-            res.status(401).json({ error: "E-mail or password is invalid." });
+            res.status(401).json({ message: "E-mail or password is invalid." });
 
         }
     }

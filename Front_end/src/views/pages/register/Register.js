@@ -3,9 +3,11 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "bootstrap/dist/css/bootstrap.css";
 import { Link } from 'react-router-dom'
-
+import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import auth from '../../../Services/auth';
+import { toast } from 'react-toastify';
+
 const Register = () => {
   var Navigate = useNavigate();
   const validationSchema = Yup.object().shape({
@@ -40,12 +42,13 @@ const Register = () => {
     password: "",
     confirmPassword: "",
   };
-
   const handleSubmit = (values) => {
     auth.register(values).then(response => {
+      toast.success("Your account has been created successfully.");
       Navigate("/login");
     }).catch(error => {
       console.log(error);
+      toast.error(error.response.data.message);
     })
 
   };

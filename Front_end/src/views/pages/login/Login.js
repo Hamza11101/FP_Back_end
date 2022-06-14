@@ -5,9 +5,13 @@ import * as Yup from "yup";
 import "bootstrap/dist/css/bootstrap.css";
 // import { History } from 'history';
 import auth from '../../../Services/auth';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 // const history = History
 const Login = () => {
+  var Navigate = useNavigate();
+
   const validationSchema = Yup.object().shape({
     
     email: Yup.string()
@@ -28,8 +32,12 @@ const Login = () => {
   const handleSubmit = (values) => {
     auth.login(values).then(response=>{
       localStorage.setItem('token', response.data.token)
+      toast.success("You're logged in successfully.");
+      Navigate("/dashboard");
+
     }).catch(error=>{
       console.log(error);
+      toast.error(error.response.data.message);
     });
 };
   return (
