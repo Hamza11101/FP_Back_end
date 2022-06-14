@@ -12,7 +12,17 @@ import 'react-toastify/dist/ReactToastify.css';
 ReactDOM.render(
   <Provider store={store}>
     <App />
-    <ToastContainer />
+    <ToastContainer 
+    position="top-right"
+    autoClose={5000}
+    hideProgressBar={false}
+    newestOnTop={false}
+    closeOnClick
+    rtl={false}
+    pauseOnFocusLoss
+    draggable
+    pauseOnHover
+    theme='colored'/>
   </Provider>,
   document.getElementById('root'),
 )
