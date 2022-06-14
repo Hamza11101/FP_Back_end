@@ -7,10 +7,6 @@ import { toast } from 'react-toastify';
 
 const Tables = () => {
   const [users, setUsers] = useState([]);
-  // const [currentUser, setCurrentUser] = useState(null);
-  // const [currentIndex, setCurrentIndex] = useState(-1);
-  // const [searchName, setSearchName] = useState("");
-
   useEffect(() => {
     retrieveUsers();
   }, []);
@@ -30,14 +26,7 @@ const Tables = () => {
 
   const refreshList = () => {
     retrieveUsers();
-    // setCurrentUser(null);
-    // setCurrentIndex(-1);
   };
-
-  // const setActiveUser = (tutorial, index) => {
-  //   setCurrentUser(tutorial);
-  //   setCurrentIndex(index);
-  // };
 
   const removeOneUser = (e,id) => {
     userService.removeOne(id)
@@ -50,61 +39,46 @@ const Tables = () => {
       });
   };
 
-  
-
-
-
-
-
-
   return (
-    <div className="list row">
+    <div className="row">
 
-      <div className="col-md-6">
-        <h4>Users List</h4>
+      <div className="col-md-12">
+        <h4>Users list</h4>
         <div>
         <div className="d-grid gap-2">
             <Link to="/adduser">
-              <button className="btn btn-success" type="button">Add User</button>
+              <button className="btn btn-success" type="button">
+              <i className='fa fa-plus'></i> Add new user</button>
             </Link>
           </div>
           <table className="table">
             <thead className="thead-dark">
               <tr>
                 <th scope="col">#</th>
-                <th scope="col">First Name</th>
-                <th scope="col">Last Name</th>
+                <th scope="col">First name</th>
+                <th scope="col">Last name</th>
                 <th scope="col">E-mail</th>
-               
-                 
-                <th scope="col">Delete User</th>
-                <th scope="col">Update User</th>
-
-
+                <th scope="col">Actions</th>
               </tr>
             </thead>
             {users &&
               users.map((user, index) => (
-
-
-
                 <tbody key={user._id}>
                   <tr>
-
                     <th scope="row">{index}</th>
                     <td>{user.firstName}</td>
                     <td>{user.lastName}</td>
                     <td>{user.email}</td>
-                    
-                    <td><button className='btn btn-danger' onClick={(e) => { removeOneUser(e,user._id)}}>Delete</button> </td>
-                    <td><Link to={`/updateuser/${user._id}`}><button className='btn btn-success' >Update</button></Link></td>
-
+                    <td>
+                      <button className='btn btn-danger me-1' onClick={(e) => { removeOneUser(e,user._id)}}>
+                        <i className='fa fa-trash'></i> Delete
+                        </button>
+                      <Link to={`/updateuser/${user._id}`} className='btn btn-success'>
+                      <i className='fa fa-edit'></i> Update</Link>
+                    </td>
                   </tr>
-
                 </tbody>
               )
-
-
               )}
 
 

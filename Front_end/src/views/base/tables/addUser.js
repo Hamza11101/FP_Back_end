@@ -182,7 +182,7 @@ const AddUser = () => {
                 
                 <div className="d-grid gap-2">
                 <button type="submit" className="btn btn-primary">
-                  Add User
+                <i className='fa fa-save'></i> Add new user
                 </button>
                 <Link className="btn btn-link" to="/base/tables"> 
                      Back 

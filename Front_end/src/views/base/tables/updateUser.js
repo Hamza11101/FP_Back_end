@@ -192,7 +192,7 @@ const UpdateUser = props => {
 
                                 <div className="d-grid gap-2">
                                     <button type="submit" className="btn btn-primary">
-                                        Update
+                                    <i className='fa fa-save'></i> Update
                                     </button>
                                     <Link className="btn btn-link" to="/base/tables">
                                         Back
