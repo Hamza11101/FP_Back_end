@@ -43,21 +43,11 @@ const Register = () => {
   };
   
   const handleSubmit = (values) => {
-    const data = {
-      firstName:values.firstName,
-      lastName:values.lastName,
-      email:values.email,
-      password:values.password
-    };
-
-    auth.register(data).then(response=>{
-      console.log(response)
-      
-
+    auth.register(values).then(response=>{
+      Navigate("/login");
     }).catch(error=>{
       console.log(error);
     })
-       Navigate("/login");
 
   };
   return (

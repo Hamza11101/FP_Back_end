@@ -11,38 +11,26 @@ const Login = () => {
   const validationSchema = Yup.object().shape({
     
     email: Yup.string()
-      .email("invalide email")
-      .required("Email is required"),
+      .email("Invalide email.")
+      .required("Email is required."),
     password: Yup.string()
-      .required("Password is required")
-      .min(8, "Too short")
-      .max(50, "Too long"),
+      .required("Password is required.")
+      .min(8, "Too short.")
+      .max(50, "Too long."),
   
   });
   
   const initialValues = {
-  
     email: "",
-    password: "",
-  
-    
+    password: ""
   };
   
-  const  handleSubmit = (values) => {
-    const data = {
-      email:values.email,
-      password:values.password
-    };
-
-    auth.login(data).then(response=>{
-      console.log(response)
+  const handleSubmit = (values) => {
+    auth.login(values).then(response=>{
       localStorage.setItem('token', response.data.token)
-
     }).catch(error=>{
       console.log(error);
-    })
-   
-  
+    });
 };
   return (
     <div className="container">

@@ -15,8 +15,7 @@ app.use((err,req,res,next)=>{
     res.status(422).send({error:err.message})
 });
 
-app.use('/api/v1',require('./src/routes/register.Route'));
-app.use('/api/v1',require('./src/routes/logIn.Route'));
+app.use('/api/v1',require('./src/routes/auth.Route'));
 app.use('/api/v1',require('./src/routes/user.Route'));
 app.use('/api/v1',require('./src/routes/tags.Route'));
 app.use('/api/v1',require('./src/routes/forgotPassword.api'));
