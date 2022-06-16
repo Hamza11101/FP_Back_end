@@ -19,7 +19,6 @@ app.use('/api/v1',require('./src/routes/auth.Route'));
 app.use('/api/v1',require('./src/routes/user.Route'));
 app.use('/api/v1',require('./src/routes/tags.Route'));
 app.use('/api/v1',require('./src/routes/forgotPassword.api'));
-app.use('/api/v1',require('./src/routes/resetPassword.api'));
 app.use('/api/v1',require('./src/routes/event.route'));
 app.use('/api/v1',require('./src/routes/publicEvent.route'));
 

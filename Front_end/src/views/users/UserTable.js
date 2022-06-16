@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import "bootstrap/dist/css/bootstrap.css";
-import userService from '../../../Services/user'
+import userService from '../../Services/user'
 import { Link } from "react-router-dom";
 import { toast } from 'react-toastify';
-import confirm from '../../../Services/confirm'
+import confirm from '../../Services/confirm'
 
 
 const Tables = () => {
@@ -18,7 +18,7 @@ const Tables = () => {
     userService.getAllusers()
       .then(response => {
         setUsers(response.data);
-        console.log(response.data);
+        
       })
       .catch(e => {
         console.log(e);
@@ -51,7 +51,7 @@ const Tables = () => {
         <h4>Users list</h4>
         <div>
         <div className="d-grid gap-2">
-            <Link to="/adduser">
+            <Link to="/users/create">
               <button className="btn btn-success" type="button">
               <i className='fa fa-plus'></i> Add new user</button>
             </Link>
@@ -78,7 +78,7 @@ const Tables = () => {
                       <button className='btn btn-danger me-1' onClick={(e) => { removeOneUser(e,user._id)}}>
                         <i className='fa fa-trash'></i> Delete
                         </button>
-                      <Link to={`/updateuser/${user._id}`} className='btn btn-success'>
+                      <Link to={`/users/update/${user._id}`} className='btn btn-success'>
                       <i className='fa fa-edit'></i> Update</Link>
                     </td>
                   </tr>
@@ -88,13 +88,7 @@ const Tables = () => {
 
 
           </table>
-          
-
-
-        </div>
-
-
-
+  </div>
 
       </div>
 

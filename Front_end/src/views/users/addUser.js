@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { useNavigate } from 'react-router-dom';
-import userService from "src/Services/user";
+import userService from "../../Services/user";
 const AddUser = () => {
   var Navigate = useNavigate();
   const validationSchema = Yup.object().shape({
@@ -56,7 +56,7 @@ const AddUser = () => {
 
     userService.createOne(data).then(response=>{
       toast.success(response.data.message);
-      Navigate("/base/tables");
+      Navigate("/users");
 
     }).catch(error=>{
       console.log(error);
@@ -184,7 +184,7 @@ const AddUser = () => {
                 <button type="submit" className="btn btn-primary">
                 <i className='fa fa-save'></i> Add new user
                 </button>
-                <Link className="btn btn-link" to="/base/tables"> 
+                <Link className="btn btn-link" to="/users"> 
                      Back 
                  </Link>
                 </div>

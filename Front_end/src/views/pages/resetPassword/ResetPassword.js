@@ -3,9 +3,13 @@ import "bootstrap/dist/css/bootstrap.css";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import auth from '../../../Services/auth';
-export default function ressetPassword() {
+import { toast } from 'react-toastify';
+import { useNavigate, useParams } from 'react-router-dom';
+export default function RessetPassword() {
+  let navigate = useNavigate();
+  const {token} = useParams();
+  console.log(token)
   const validationSchema = Yup.object().shape({
-
     password: Yup.string()
       .required("Password is required.")
       .min(8, "Too short.")
@@ -16,7 +20,6 @@ export default function ressetPassword() {
         [Yup.ref("password"), null],
         "Not the same passwords."
       ),
-
   });
 
   const initialValues = {
@@ -25,17 +28,17 @@ export default function ressetPassword() {
   };
 
   const handleSubmit = (values) => {
-
-
-    auth.reset(values).then(response => {
-
-
-
+    let data ={
+      token:token,
+      password:values.password,
+    }
+    auth.reset(data).then(response => {
+      toast.success(response.data.message);
+      navigate('/login');
     }).catch(error => {
       console.log(error);
+      toast.error(error.response.data.message);
     })
-    console.log(values)
-
   };
 
   return (

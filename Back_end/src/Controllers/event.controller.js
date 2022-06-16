@@ -42,7 +42,7 @@ exports.addOneEvent = async (req, res, next) => {
         await event.save()
 
         
-        res.send(event)
+        res.send({message: "Event created successfully."})
 
     } catch (error) {
         console.log(error);
@@ -55,7 +55,7 @@ exports.addOneEvent = async (req, res, next) => {
 exports.updateOneEvent = async (req, res, next) => {
     try {
         let event = await Event.findByIdAndUpdate(req.params.id, req.body, { new: true })
-        res.send(event)
+        res.send({message: "Event has been updated successfully."})
     }
     catch (error) {
         next();
@@ -65,7 +65,7 @@ exports.updateOneEvent = async (req, res, next) => {
 exports.deleteOneEvent = async (req, res, next) => {
     try {
         let event = await Event.findByIdAndRemove(req.params.id);
-        res.send(event);
+        res.send({message: "Event has been delated successfully."});
     } catch (error) {
         next()
     }

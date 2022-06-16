@@ -64,7 +64,7 @@ exports.updateOneUser = async (req, res, next) => {
                 delete  req.body.password;
             }
             let user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true })
-            res.send(user)
+            res.send({ message: 'User has been updated.' })
         }
     }
     catch (error) {

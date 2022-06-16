@@ -4,9 +4,9 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Link } from 'react-router-dom'
 import auth from '../../../Services/auth';
+import { toast } from 'react-toastify';
 export default function ForgotPassword() {
   const validationSchema = Yup.object().shape({
-
     email: Yup.string()
       .email("Invalid email.")
       .required("Email is required."),
@@ -18,20 +18,18 @@ export default function ForgotPassword() {
 
   const handleSubmit = (values) => {
     auth.forgot(values).then(response => {
-
-    }).catch(error => {
+      toast.success(response.data.message);
+    }).catch(error => { 
       console.log(error);
+      toast.error(error.response.data.message);
     })
-
   };
-
-
 
   return (
     <div className="container">
       <div className="row">
         <div className="col-md-6 offset-md-3 pt-3">
-          <h1 className="text-center">Forgot Password</h1>
+          <h1 className="text-center">Forgot password</h1>
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
@@ -55,13 +53,10 @@ export default function ForgotPassword() {
                     className="text-danger"
                   />
                 </div>
-
-
                 <div className="d-grid gap-2">
                   <button type="submit" className="btn btn-primary">
                     Send reset link
                   </button>
-
                 </div>
                 <Link className="btn btn-link" to="/login">
                   Sign in

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from 'react-router-dom';
-import userServices from '../../../Services/user';
+import userServices from '../../Services/user';
 import { Formik, Field, Form, ErrorMessage } from "formik";
+import { toast } from 'react-toastify';
 import * as Yup from "yup";
 import "bootstrap/dist/css/bootstrap.css";
 import { Link } from "react-router-dom";
@@ -37,7 +38,7 @@ const UpdateUser = props => {
         userServices.getOne(id)
             .then(response => {
                 setCurrentUser(response.data);
-                console.log(response.data);
+                
             })
             .catch(e => {
                 console.log(e);
@@ -61,20 +62,19 @@ const UpdateUser = props => {
             password: values.password,
             email: values.email,
             role: values.role,
-
-
-
-        };
+    };
 
         userServices.updateOne(id, data).then(response => {
-            console.log(response)
+            toast.success(response.data.message);
+            navigate("/users");
 
 
         }).catch(error => {
             console.log(error);
-        })
-        navigate("/base/tables");
+      toast.error(error.response.data.message);
 
+        })
+       
     };
 
 
@@ -194,7 +194,7 @@ const UpdateUser = props => {
                                     <button type="submit" className="btn btn-primary">
                                     <i className='fa fa-save'></i> Update
                                     </button>
-                                    <Link className="btn btn-link" to="/base/tables">
+                                    <Link className="btn btn-link" to="/users">
                                         Back
                                     </Link>
                                 </div>
