@@ -28,6 +28,8 @@ const UpdateTag = props => {
   const getTag = id => {
     tagServices.getOne(id)
       .then(response => {
+        const fields = ['name', 'description'];
+        fields.forEach(field => initialValues[field] = response.data[field]);
         setCurrentTag(response.data);
       })
       .catch(e => {
@@ -37,11 +39,8 @@ const UpdateTag = props => {
   useEffect(() => {
     if (id)
       getTag(id);
+
   }, [id]);
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setCurrentTag({ ...currentTag, [name]: value });
-  };
 
   const handleSubmit = (values) => {
     const data = {
@@ -51,10 +50,11 @@ const UpdateTag = props => {
 
     tagServices.updateOne(id, data).then(response => {
       toast.success(response.data.message);
+      navigate("/tags");
     }).catch(error => {
       console.log(error);
     })
-    navigate("/tags");
+   
   };
 
   return (
@@ -67,12 +67,11 @@ const UpdateTag = props => {
             validationSchema={validationSchema}
             onSubmit={(values) => handleSubmit(values)}
           >
+
             <Form>
               <div className="form-group mb-3">
                 <label htmlFor="name">Tag name:</label>
                 <Field
-                  value={currentTag.name}
-                  onChange={handleInputChange}
                   type="text"
                   id="name"
                   name="name"
@@ -88,8 +87,6 @@ const UpdateTag = props => {
               <div className="form-group mb-3">
                 <label htmlFor="description">Tag description:</label>
                 <Field
-                  value={currentTag.description}
-                  onChange={handleInputChange}
                   type="text"
                   id="description"
                   name="description"

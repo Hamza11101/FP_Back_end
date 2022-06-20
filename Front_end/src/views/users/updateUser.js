@@ -37,6 +37,9 @@ const UpdateUser = props => {
     const getUser = id => {
         userServices.getOne(id)
             .then(response => {
+                const fields = ['firstName', 'lastName','email'];
+                fields.forEach(field => initialValues[field] = response.data[field]);
+
                 setCurrentUser(response.data);
                 
             })
@@ -48,11 +51,7 @@ const UpdateUser = props => {
         if (id)
             getUser(id);
     }, [id]);
-    const handleInputChange = (event) => {
-        console.log(event)
-        const { name, value } = event.target;
-        setCurrentUser({ ...currentUser, [name]: value });
-    };
+  
 
     const handleSubmit = (values) => {
 
@@ -90,13 +89,12 @@ const UpdateUser = props => {
                         validationSchema={validationSchema}
                         onSubmit={(values) => handleSubmit(values)}
                     >
-                        {({ resetForm }) => (
+                       
                             <Form>
                                 <div className="form-group mb-3">
                                     <label htmlFor="firstName">First Name:</label>
                                     <Field
-                                        value={currentUser.firstName}
-                                        onChange={handleInputChange}
+                                        
                                         type="text"
                                         id="firstName"
                                         name="firstName"
@@ -114,8 +112,7 @@ const UpdateUser = props => {
                                 <div className="form-group mb-3">
                                     <label htmlFor="lastName">Last Name:</label>
                                     <Field
-                                        value={currentUser.lastName}
-                                        onChange={handleInputChange}
+                                        
                                         type="text"
                                         id="lastName"
                                         name="lastName"
@@ -132,8 +129,7 @@ const UpdateUser = props => {
                                 <div className="form-group mb-3">
                                     <label htmlFor="email">Email:</label>
                                     <Field
-                                        value={currentUser.email}
-                                        onChange={handleInputChange}
+                                       
                                         type="email"
                                         id="email"
                                         name="email"
@@ -151,7 +147,7 @@ const UpdateUser = props => {
                                     <label htmlFor="password">Password:</label>
                                     <Field
                                         
-                                        onChange={handleInputChange}
+                                       
                                         type="password"
                                         id="password"
                                         name="password"
@@ -199,7 +195,7 @@ const UpdateUser = props => {
                                     </Link>
                                 </div>
                             </Form>
-                        )}
+                        
                     </Formik>
                 </div>
             </div>

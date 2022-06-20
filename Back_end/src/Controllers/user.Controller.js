@@ -52,18 +52,18 @@ exports.addOneUser = async (req, res, next) => {
 exports.updateOneUser = async (req, res, next) => {
     try {
         
-        const userFound = await User.find({ email: req.body.email });
-        if (userFound.length > 0) {
+        const userFound = await User.find({ email: req.body.email, _id :  {$ne: req.params.id}});
+        if (userFound.length > 0 ) {
             res.status(400).send({ message: 'E-mail already in use.' })
         }
         else {
             if( req.body.password != ""){
                 const salt = await bcrypt.genSalt(10);
-                req.body.password = await bcrypt.hash(user.password, salt);
+                req.body.password = await bcrypt.hash(req.body.password, salt);
             }else{
                 delete  req.body.password;
             }
-            let user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true })
+            await User.findByIdAndUpdate(req.params.id, req.body, { new: true })
             res.send({ message: 'User has been updated.' })
         }
     }

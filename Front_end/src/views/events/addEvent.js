@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import eventServices from "src/Services/eventServices";
 
+
 const AddEvent = () => {
   var Navigate = useNavigate();
   const validationSchema = Yup.object().shape({
@@ -36,7 +37,7 @@ const AddEvent = () => {
       location: Yup.string()
       .required("Location is required.")
       ,
-      picture: Yup.string()
+      picture: Yup.mixed()
       .required("Picture is required.")
       ,
       availebleTicketNumber: Yup.number()
@@ -54,7 +55,7 @@ const AddEvent = () => {
     price: "",
     location: "",
     picture:"",
-    availebleTicketNumber:null,
+    availebleTicketNumber:0,
         
     
   };
@@ -75,6 +76,15 @@ const AddEvent = () => {
     // };
     var bodyFormData = new FormData();
     bodyFormData.append('eventName', values.eventName);
+    bodyFormData.append('eventDescription', values.eventDescription);
+    bodyFormData.append('startDate', values.startDate);
+    bodyFormData.append('endDate', values.endDate);
+    bodyFormData.append('startTime', values.startTime);
+    bodyFormData.append('endTime', values.endTime);
+    bodyFormData.append('price', values.price);
+    bodyFormData.append('location', values.location);
+    bodyFormData.append('availebleTicketNumber', values.availebleTicketNumber);
+    bodyFormData.append('tags', JSON.stringify([]));  
     bodyFormData.append('picture', values.picture);
 
 
@@ -233,7 +243,7 @@ const AddEvent = () => {
                 </div>
                 <div className="form-group mb-3">
                   <label htmlFor="picture">Picture:</label>
-                <Field type={"file"} 
+                <input type={"file"} 
                  id="picture"
                  name="picture"
                  className="form-control"/>
