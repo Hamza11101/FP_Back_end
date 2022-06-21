@@ -6,6 +6,7 @@ const upload = require('../utils/multer');
 
 router.get('/events', passport.authenticate('bearer', { session: false }), eventsController.getAllEvents);
 
+router.get('/newtags', passport.authenticate('bearer', { session: false }), eventsController.getTags);
 
 router.get('/events/:id', passport.authenticate('bearer', { session: false }), eventsController.getOneEvent);
 

@@ -1,6 +1,7 @@
 import React, { Component, Suspense} from 'react'
 import { HashRouter, Route, Routes } from 'react-router-dom'
 import './scss/style.scss'
+// import WelcomePage from '../src/views/pages/welcomePage/welcomePage'
 const loading = (
   <div className="pt-3 text-center">
     <div className="sk-spinner sk-spinner-pulse"></div>
@@ -24,6 +25,7 @@ class App extends Component {
       <HashRouter>
         <Suspense fallback={loading}>
           <Routes>
+          {/* <Route exact path="/welcome"  element={<WelcomePage />} /> */}
             <Route exact path="/login"  element={<Login />} />
             <Route exact path="/register"  element={<Register />} />
             <Route exact path="/404"  element={<Page404 />} />

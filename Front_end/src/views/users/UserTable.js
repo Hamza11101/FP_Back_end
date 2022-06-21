@@ -4,10 +4,11 @@ import userService from '../../Services/user'
 import { Link } from "react-router-dom";
 import { toast } from 'react-toastify';
 import confirm from '../../Services/confirm'
-
+import AuthService from '../../Services/auth'
 
 const Tables = () => {
   const [users, setUsers] = useState([]);
+  const [authId,setAuthId] = useState(AuthService.getAuthUserId)
   useEffect(() => {
     retrieveUsers();
   }, []);
@@ -70,12 +71,13 @@ const Tables = () => {
               users.map((user, index) => (
                 <tbody key={user._id}>
                   <tr>
-                    <th scope="row">{index}</th>
+                    <th scope="row">{index+1}</th>
                     <td>{user.firstName}</td>
                     <td>{user.lastName}</td>
                     <td>{user.email}</td>
                     <td>
-                      <button className='btn btn-danger me-1' onClick={(e) => { removeOneUser(e,user._id)}}>
+                      <button className='btn btn-danger me-1' onClick={(e) => { removeOneUser(e,user._id)}}
+                      disabled={authId === user._id}>
                         <i className='fa fa-trash'></i> Delete
                         </button>
                       <Link to={`/users/update/${user._id}`} className='btn btn-success'>

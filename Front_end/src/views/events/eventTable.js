@@ -71,36 +71,19 @@ const EventTables = () => {
                 <th scope="col">#</th>
                 <th scope="col">Event name</th>
                 <th scope="col">Event description</th>
-                <th scope="col">Start date</th>
-                <th scope="col">End date</th>
-                <th scope="col">Start time</th>
-                <th scope="col">End time</th>
                 <th scope="col">Price</th>
                 <th scope="col">Location</th>
                 <th scope="col">availeble ticket number</th>
-
-               
-                 
                 <th scope="col">Actions</th>
-              
-
-
               </tr>
             </thead>
             {events &&
               events.map((event, index) => (
-
-
-
                 <tbody key={event._id}>
                   <tr>
-                    <th scope="row">{index}</th>
+                    <th scope="row">{index+1}</th>
                     <td>{event.eventName}</td>
                     <td>{event.eventDescription}</td>
-                    <td>{event.startDate}</td>
-                    <td>{event.endDate}</td>
-                    <td>{event.startTime}</td>
-                    <td>{event.endTime}</td>
                     <td>{event.price}</td>
                     <td>{event.location}</td>
                     <td>{event.availebleTicketNumber}</td>

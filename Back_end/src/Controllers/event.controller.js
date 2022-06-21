@@ -1,8 +1,7 @@
 const Event = require('../Models/event.model')
-
+const Tag = require('../Models/tag.model');
 exports.getAllEvents = async (req, res, next) => {
     try {
-        // console.log(req.event);
         let event = await Event.find()
         res.send(event);
     } catch (error) {
@@ -12,7 +11,7 @@ exports.getAllEvents = async (req, res, next) => {
 
 exports.getOneEvent = async (req, res, next) => {
     try {
-        let event = await Event.findById(req.params.id)
+        let event = await Event.findById(req.params.id).populate('tags')
         res.send(event);
 
     } catch (error) {
@@ -23,6 +22,15 @@ exports.getOneEvent = async (req, res, next) => {
 exports.addOneEvent = async (req, res, next) => {
 
     try {
+        // save file
+        if(req.file != undefined)
+        {
+            req.body.picture = `http://localhost:5000/uploads/${req.file.filename}`
+        }else{
+            req.body.picture =  `http://localhost:5000/uploads/noimg.jpg` 
+        }
+        // parse tags
+        req.body.tags = JSON.parse(req.body.tags);
         const event = new Event({
             eventName: req.body.eventName,
             eventDescription: req.body.eventDescription,
@@ -34,7 +42,7 @@ exports.addOneEvent = async (req, res, next) => {
             location:req.body.location,
             picture:req.body.picture,
             availebleTicketNumber:req.body.availebleTicketNumber,
-            tags:req.body.tags,
+            tags: req.body.tags,
             owner:req.user._id,
 
         
@@ -52,8 +60,30 @@ exports.addOneEvent = async (req, res, next) => {
 
 };
 
+exports.getTags =  async (req, res, next) => {
+    try {
+        const tags = await Tag.find()
+        let newTagsForm = []
+        tags.map(tag => {
+            newTagsForm.push({label:tag.name, value:tag._id})
+        })
+        res.send(newTagsForm)
+    }
+    catch (error) {
+        next();
+    }
+};
 exports.updateOneEvent = async (req, res, next) => {
     try {
+        // save file
+        if(req.file != undefined)
+        {
+            req.body.picture = `http://localhost:5000/uploads/${req.file.filename}`
+        }else{
+            req.body.picture =  `http://localhost:5000/uploads/noimg.jpg` 
+        }
+        // parse tags
+        req.body.tags = JSON.parse(req.body.tags);
         let event = await Event.findByIdAndUpdate(req.params.id, req.body, { new: true })
         res.send({message: "Event has been updated successfully."})
     }

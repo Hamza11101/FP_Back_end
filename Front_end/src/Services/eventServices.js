@@ -4,6 +4,9 @@ import http2 from '../utils/HTTPFormData'
 const getAllEvents = ()=>{
     return  http.get("/events");
 }
+const getAllTags = ()=>{
+  return  http.get("/newtags");
+}
 
 const updateOne = (id, data) => {
     return http2.put(`/events/${id}`, data);
@@ -25,7 +28,8 @@ const eventService = {
     updateOne,
     removeOne,
     getOne,
-    createOne
+    createOne,
+    getAllTags
 }
 
 export default  eventService

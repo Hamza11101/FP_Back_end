@@ -9,6 +9,7 @@ import store from './store'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+
 ReactDOM.render(
   <Provider store={store}>
     <App />

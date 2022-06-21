@@ -7,6 +7,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(morgan('dev'));
+app.use('/uploads', express.static('./src/uploads'));
 
 require("./src/db/Connect");
 require('./src/PassPort/bearerStrategy');

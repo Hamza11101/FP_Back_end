@@ -63,7 +63,7 @@ const TableTag = () => {
               tags.map((tag, index) => (
                 <tbody key={tag._id}>
                   <tr>
-                    <th scope="row">{index}</th>
+                    <th scope="row">{index+1}</th>
                     <td>{tag.name}</td>
                     <td>{tag.description}</td>
                     <td>

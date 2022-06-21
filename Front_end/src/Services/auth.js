@@ -39,12 +39,23 @@ const isAuthentificated = () => {
     }
 }
 
+
+const getAuthUserId = ()=>{
+    const token = localStorage.getItem('token')
+    if (token != null) {
+        var decoded = jwt_decode(token);
+        return decoded.user_id
+    }else{
+        return '';
+    }
+}
 const auth = {
     login,
     register,
     forgot,
     reset,
-    isAuthentificated
+    isAuthentificated,
+    getAuthUserId
 }
 
 export default auth
