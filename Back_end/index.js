@@ -22,6 +22,8 @@ app.use('/api/v1',require('./src/routes/tags.Route'));
 app.use('/api/v1',require('./src/routes/forgotPassword.api'));
 app.use('/api/v1',require('./src/routes/event.route'));
 app.use('/api/v1',require('./src/routes/publicEvent.route'));
+app.use('/api/v1',require('./src/routes/reservation.route'));
+
 
 const port = process.env.port || 5000;
 app.listen(port, () => console.log(`Listening on port ${port}!`));

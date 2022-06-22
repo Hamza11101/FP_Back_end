@@ -2,7 +2,7 @@ const Event = require('../Models/event.model')
 const Tag = require('../Models/tag.model');
 exports.getAllEvents = async (req, res, next) => {
     try {
-        let event = await Event.find()
+        let event = await Event.find().populate('tags')
         res.send(event);
     } catch (error) {
         next();
