@@ -6,17 +6,15 @@ const path = require('path');
 const ejs = require('ejs');
 const QRCode = require('qrcode');
 const pdf = require("pdf-creator-node");
-const ticketPath = path.resolve('./src/utils', 'ticket.html');
-const Ticket = fs.readFileSync(ticketPath, { encoding: 'utf-8' })
-const { v4: uuid } = require('uuid'); 
+const { v4: uuid } = require('uuid');
 
 
 exports.createReservation = async (req, res, next) => {
     try {
         var event = await Event.findById(req.body.eventId)
         if (event.availebleTicketNumber > 0) {
-            let qrCodeFileName = uuid();
-            var ticketFileName = uuid();
+            const qrCodeFileName = uuid();
+            const ticketFileName = uuid();
             const reservation = new Reservation({
                 clientFirstName: req.body.clientFirstName,
                 clientLastName: req.body.clientLastName,
@@ -25,17 +23,24 @@ exports.createReservation = async (req, res, next) => {
                 ticketPath: `http://localhost:5000/generatedFiles/tickets/${ticketFileName}.pdf`,
                 event: req.body.eventId
             })
-            console.log(reservation);
             // qr code generation
-             QRCode.toFile(`./generatedFiles/qrCodes/${qrCodeFileName}.png`, JSON.stringify(reservation), ['.png'])
+            QRCode.toFile(`./generatedFiles/qrCodes/${qrCodeFileName}.png`, JSON.stringify(reservation), ['.png'])
             // generation of ticket pdf
+            const ticketPath = path.resolve('./src/utils', 'ticket.html');
+            const ticketFile = fs.readFileSync(ticketPath, { encoding: 'utf-8' })
+            const ticketOptions = {
+                First_name: reservation.clientFirstName,
+                Last_name: reservation.clientLastName,
+                QRcode: reservation.qrCodePath
+            }
+            const ticketRender = ejs.render(ticketFile, ticketOptions)
             var options = {
                 format: "A3",
                 orientation: "portrait",
                 border: "10mm",
                 header: {
                     height: "45mm",
-                    contents: '<div style="text-align: center;">Author: Shyam Hajare</div>'
+                    contents: '',
                 },
                 footer: {
                     height: "28mm",
@@ -48,21 +53,13 @@ exports.createReservation = async (req, res, next) => {
                 }
             };
             var document = {
-                html: Ticket,
-                data: {
-                    Reservation: Reservation,
-                },
-                path:  `./generatedFiles/tickets/${ticketFileName}.pdf`,
+                html: ticketRender,
+                data: {},
+                path: `./generatedFiles/tickets/${ticketFileName}.pdf`,
                 type: "",
             };
 
-            pdf.create(document, options)
-                .then((res) => {
-                    console.log(res);
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
+            await pdf.create(document, options);
             // send mail
             const transporter = nodemailer.createTransport({
                 service: 'yahoo',
@@ -74,11 +71,13 @@ exports.createReservation = async (req, res, next) => {
             //send an email
             const templatePath = path.resolve('./src/utils', 'reservation.html');
             const reservationTemplate = fs.readFileSync(templatePath, { encoding: 'utf-8' })
-            const render = ejs.render(reservationTemplate, { First_name: reservation.clientFirstName, Last_name: reservation.clientLastName })
+            const mailOptions ={ First_name: reservation.clientFirstName, Last_name: reservation.clientLastName }
+            const render = ejs.render(reservationTemplate,mailOptions )
             const info = await transporter.sendMail({
                 from: process.env.userEmail, // sender address
                 to: `${reservation.clientEmail}`,
                 subject: "Event reservation",
+                html: render,
                 attachments: [{
                     filename: 'ticket.pdf',
                     path: `./generatedFiles/tickets/${ticketFileName}.pdf`

@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <title>Hello world!</title>
-  </head>
-  <body>
-    <h1>User List</h1>
-    <ul>
-      {{#each Reservation}}
-      <li>First name: {{this.clientFirstName}}</li>
-      <li>Last name: {{this.clientLastName}}</li>
-      <li>Email: {{this.clientEmail}}</li>
-      <li>qrCode: {{this.qrCode}}</li>
 
-      <br />
-      {{/each}}
-    </ul>
-  </body>
+<head>
+  <meta charset="utf-8" />
+  <title>Hello world!</title>
+  <style>
+    .h1 {
+      color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Your ticket</h1>
+  <h2>First name: <%= First_name %> </h2>
+  <h2>Last name: <%= Last_name %></h2>
+  <img src="<%= QRcode %>" alt="qr code">
+
+</body>
+
 </html>
