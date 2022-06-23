@@ -73,7 +73,7 @@ exports.createReservation = async (req, res, next) => {
             const reservationTemplate = fs.readFileSync(templatePath, { encoding: 'utf-8' })
             const mailOptions ={ First_name: reservation.clientFirstName, Last_name: reservation.clientLastName }
             const render = ejs.render(reservationTemplate,mailOptions )
-            const info = await transporter.sendMail({
+            await transporter.sendMail({
                 from: process.env.userEmail, // sender address
                 to: `${reservation.clientEmail}`,
                 subject: "Event reservation",
