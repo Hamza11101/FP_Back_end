@@ -8,6 +8,7 @@ app.use(express.json());
 app.use(cors());
 app.use(morgan('dev'));
 app.use('/uploads', express.static('./src/uploads'));
+app.use('/generatedFiles', express.static('./generatedFiles'));
 
 require("./src/db/Connect");
 require('./src/PassPort/bearerStrategy');
