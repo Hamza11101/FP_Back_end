@@ -20,7 +20,7 @@ const welcomePage = () => {
                 <a className="nav-link" target="_blank" href="#">About Us</a>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" target="_blank" to="/eventslist">Events</Link>
+                <Link className="nav-link" to="/eventslist">Events</Link>
               </li>
 
             </ul>

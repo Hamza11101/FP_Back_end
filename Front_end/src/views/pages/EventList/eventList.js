@@ -2,15 +2,14 @@ import React, { useState, useEffect } from 'react'
 import "bootstrap/dist/css/bootstrap.css";
 import eventServicePub from '../../../Services/pubEventServices';
 import { Link } from "react-router-dom";
-
+import Header from 'src/views/common/header/header';
+import Footer from 'src/views/common/footer/footer';
 export default function EventList() {
 
     const [events, setEvents] = useState([]);
     useEffect(() => {
         retrieveEvents();
     }, []);
-
-
 
     const retrieveEvents = () => {
         eventServicePub.getAllEventsP()
@@ -22,9 +21,9 @@ export default function EventList() {
             });
     };
 
-
-
     return (
+        <>
+        <Header/>
         <div className="container">
             <div className='row'>
                 {events &&
@@ -48,5 +47,7 @@ export default function EventList() {
                     )}
             </div>
         </div>
+        <Footer/>
+        </>
     )
 }
