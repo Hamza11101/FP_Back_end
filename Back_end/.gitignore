@@ -1,2 +1,5 @@
 .env
 node_modules
+src/uploads/*
+!src/uploads/.gitkeep
+!src/uploads/noimg.jpg

@@ -1,14 +1,30 @@
 require('dotenv').config();
 const express = require('express');
-const bodyParser = require('body-parser');
 const cors = require('cors');
-const config = require('./src/config/config');
-const router = require('./src/routes/router');
+const morgan = require('morgan');
 
 const app = express();
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(cors());
-app.use(router);
+app.use(morgan('dev'));
+app.use('/uploads', express.static('./src/uploads'));
+app.use('/generatedFiles', express.static('./generatedFiles'));
 
-const port = config.PORT || 5000;
+require("./src/db/Connect");
+require('./src/PassPort/bearerStrategy');
+
+app.use((err,req,res,next)=>{
+    res.status(422).send({error:err.message})
+});
+
+app.use('/api/v1',require('./src/routes/auth.Route'));
+app.use('/api/v1',require('./src/routes/user.Route'));
+app.use('/api/v1',require('./src/routes/tags.Route'));
+app.use('/api/v1',require('./src/routes/forgotPassword.api'));
+app.use('/api/v1',require('./src/routes/event.route'));
+app.use('/api/v1',require('./src/routes/publicEvent.route'));
+app.use('/api/v1',require('./src/routes/reservation.route'));
+
+
+const port = process.env.port || 5000;
 app.listen(port, () => console.log(`Listening on port ${port}!`));
