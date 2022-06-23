@@ -73,7 +73,6 @@ export default function Reservation() {
                                         name="clientLastName"
                                         className="form-control"
                                         placeholder="Enter your last name here"
-
                                     />
                                     <ErrorMessage
                                         name="clientLastName"
@@ -102,7 +101,6 @@ export default function Reservation() {
                                 </div>
                             </Form>
                         </Formik>
-
                     </div>
                 </div>
             </div>
