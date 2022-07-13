@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import {
   CRow,
   CCol,
@@ -12,21 +12,35 @@ import { getStyle } from '@coreui/utils'
 import { CChartBar, CChartLine } from '@coreui/react-chartjs'
 import CIcon from '@coreui/icons-react'
 import { cilArrowBottom, cilArrowTop, cilOptions } from '@coreui/icons'
+import dashService from 'src/Services/dash'
+
+
+
+
+
 
 const WidgetsDropdown = () => {
+  const [stats, setStats] = useState({})
+
+  const getAllStats = () =>{
+    dashService.getAllStats().then(response =>{
+      setStats(response.data)
+    }).catch(e => {
+      console.log(e);
+    });
+  }
+  useEffect(() => {
+    getAllStats();
+  }, []);
   return (
     <CRow>
+     
       <CCol sm={6} lg={3}>
         <CWidgetStatsA
           className="mb-4"
           color="primary"
           value={
-            <>
-              26K{' '}
-              <span className="fs-6 fw-normal">
-                (-12.4% <CIcon icon={cilArrowBottom} />)
-              </span>
-            </>
+          stats.users
           }
           title="Users"
           action={
@@ -102,20 +116,17 @@ const WidgetsDropdown = () => {
             />
           }
         />
+      
       </CCol>
+
       <CCol sm={6} lg={3}>
         <CWidgetStatsA
           className="mb-4"
           color="info"
           value={
-            <>
-              $6.200{' '}
-              <span className="fs-6 fw-normal">
-                (40.9% <CIcon icon={cilArrowTop} />)
-              </span>
-            </>
+          stats.events
           }
-          title="Income"
+          title="Events"
           action={
             <CDropdown alignment="end">
               <CDropdownToggle color="transparent" caret={false} className="p-0">
@@ -194,14 +205,9 @@ const WidgetsDropdown = () => {
           className="mb-4"
           color="warning"
           value={
-            <>
-              2.49{' '}
-              <span className="fs-6 fw-normal">
-                (84.7% <CIcon icon={cilArrowTop} />)
-              </span>
-            </>
+           stats.tags
           }
-          title="Conversion Rate"
+          title="Tags"
           action={
             <CDropdown alignment="end">
               <CDropdownToggle color="transparent" caret={false} className="p-0">
@@ -267,14 +273,9 @@ const WidgetsDropdown = () => {
           className="mb-4"
           color="danger"
           value={
-            <>
-              44K{' '}
-              <span className="fs-6 fw-normal">
-                (-23.6% <CIcon icon={cilArrowBottom} />)
-              </span>
-            </>
+         stats.reservation
           }
-          title="Sessions"
+          title="Reservations"
           action={
             <CDropdown alignment="end">
               <CDropdownToggle color="transparent" caret={false} className="p-0">

@@ -24,6 +24,7 @@ app.use('/api/v1',require('./src/routes/forgotPassword.api'));
 app.use('/api/v1',require('./src/routes/event.route'));
 app.use('/api/v1',require('./src/routes/publicEvent.route'));
 app.use('/api/v1',require('./src/routes/reservation.route'));
+app.use('/api/v1',require('./src/routes/dashBoard.Route'));
 
 
 const port = process.env.port || 5000;
